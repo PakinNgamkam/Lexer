@@ -1,0 +1,253 @@
+Nonterminals useless in grammar
+
+   assignStmt
+   beginStmt
+   callStmt
+   condition
+   constDecl
+   constDef
+   constDefs
+   expr
+   factor
+   idents
+   ifStmt
+   oddCondition
+   posSign
+   procDecl
+   readStmt
+   relOp
+   relOpCondition
+   stmts
+   term
+   varDecl
+   whileStmt
+   writeStmt
+
+
+Terminals unused in grammar
+
+   identsym
+   numbersym
+   "+"
+   "-"
+   "*"
+   "/"
+   ";"
+   "="
+   ","
+   ":="
+   "const"
+   "var"
+   "procedure"
+   "call"
+   "begin"
+   "end"
+   "if"
+   "then"
+   "else"
+   "while"
+   "do"
+   "read"
+   "write"
+   "odd"
+   "<>"
+   "<"
+   "<="
+   ">"
+   ">="
+   "("
+   ")"
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: block "."
+
+    2 block: constDecls varDecls procDecls stmt
+
+    3 constDecls: empty
+
+    4 varDecls: empty
+
+    5 procDecls: empty
+
+    6 empty: %empty
+
+    7 stmt: skipStmt
+
+    8 skipStmt: "skip"
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+identsym (258)
+numbersym (259)
+"+" (260)
+"-" (261)
+"*" (262)
+"/" (263)
+"." (264) 1
+";" (265)
+"=" (266)
+"," (267)
+":=" (268)
+"const" (269)
+"var" (270)
+"procedure" (271)
+"call" (272)
+"begin" (273)
+"end" (274)
+"if" (275)
+"then" (276)
+"else" (277)
+"while" (278)
+"do" (279)
+"read" (280)
+"write" (281)
+"skip" (282) 8
+"odd" (283)
+"<>" (284)
+"<" (285)
+"<=" (286)
+">" (287)
+">=" (288)
+"(" (289)
+")" (290)
+
+
+Nonterminals, with rules where they appear
+
+$accept (36)
+    on left: 0
+program (37)
+    on left: 1, on right: 0
+block (38)
+    on left: 2, on right: 1
+constDecls (39)
+    on left: 3, on right: 2
+varDecls (40)
+    on left: 4, on right: 2
+procDecls (41)
+    on left: 5, on right: 2
+empty (42)
+    on left: 6, on right: 3 4 5
+stmt (43)
+    on left: 7, on right: 2
+skipStmt (44)
+    on left: 8, on right: 7
+
+
+State 0
+
+    0 $accept: . program $end
+
+    $default  reduce using rule 6 (empty)
+
+    program     go to state 1
+    block       go to state 2
+    constDecls  go to state 3
+    empty       go to state 4
+
+
+State 1
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 5
+
+
+State 2
+
+    1 program: block . "."
+
+    "."  shift, and go to state 6
+
+
+State 3
+
+    2 block: constDecls . varDecls procDecls stmt
+
+    $default  reduce using rule 6 (empty)
+
+    varDecls  go to state 7
+    empty     go to state 8
+
+
+State 4
+
+    3 constDecls: empty .
+
+    $default  reduce using rule 3 (constDecls)
+
+
+State 5
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 6
+
+    1 program: block "." .
+
+    $default  reduce using rule 1 (program)
+
+
+State 7
+
+    2 block: constDecls varDecls . procDecls stmt
+
+    $default  reduce using rule 6 (empty)
+
+    procDecls  go to state 9
+    empty      go to state 10
+
+
+State 8
+
+    4 varDecls: empty .
+
+    $default  reduce using rule 4 (varDecls)
+
+
+State 9
+
+    2 block: constDecls varDecls procDecls . stmt
+
+    "skip"  shift, and go to state 11
+
+    stmt      go to state 12
+    skipStmt  go to state 13
+
+
+State 10
+
+    5 procDecls: empty .
+
+    $default  reduce using rule 5 (procDecls)
+
+
+State 11
+
+    8 skipStmt: "skip" .
+
+    $default  reduce using rule 8 (skipStmt)
+
+
+State 12
+
+    2 block: constDecls varDecls procDecls stmt .
+
+    $default  reduce using rule 2 (block)
+
+
+State 13
+
+    7 stmt: skipStmt .
+
+    $default  reduce using rule 7 (stmt)
